@@ -1,6 +1,6 @@
 001| Deconstruct 2 projects.
 > (1)https://www.instagram.com/p/B2Z1RmJHmFy/
-> (2)
+> (2)https://www.instagram.com/p/B2OsjDzIPPB/
 
 (1) Generated image.
 > Use THREE.js framework for ease of development.
@@ -14,4 +14,15 @@
 --> TODO: check if THREE has generic toon/flat shader preset.
 > set parameters and render scene.
 
-(2) 
+(2) Generated Texture
+> --Author probably used something like substance designer or another material creation software.--
+> I would use processing(for vector version) or THREE as a framework.
+> Create X amount of base layers, each starts a recursive loop
+> if a layer has more then X amount of area uncovered create a new layer
+--> new layer is random shape made from points that move in an 8 angle direction until it intersects with itself
+--> TODO: fine-tune filters for the walker to create some more repetative movements like in the picture
+--> new layer has random height increase (from range).
+-> Map color to height of layer (each layer gets a random ranged value to offset color variable)
+> position camera and lighting (required for three.js)
+--> TODO: check if THREE has generic toon/flat shader preset.
+> set parameters and render scene.
