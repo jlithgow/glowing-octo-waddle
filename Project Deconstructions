@@ -1,0 +1,17 @@
+001| Deconstruct 2 projects.
+> (1)https://www.instagram.com/p/B2Z1RmJHmFy/
+> (2)
+
+(1) Generated image.
+> Use THREE.js framework for ease of development.
+> Create 3d grid of points (random from variable range)
+> Create shape class
+--> made up of box frame, cross frame joints, and an inside circle.
+--> all random colors (from selection pallate)
+--> all random size (random from variable range)
+> populate point grid with shapes
+> position camera and lighting (required for three.js)
+--> TODO: check if THREE has generic toon/flat shader preset.
+> set parameters and render scene.
+
+(2) 
