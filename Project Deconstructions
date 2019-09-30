@@ -26,3 +26,21 @@
 > position camera and lighting (required for three.js)
 --> TODO: check if THREE has generic toon/flat shader preset.
 > set parameters and render scene.
+
+(3) Data driven app.
+> Forest is a time management app.
+> 'Planting' Screen
+--> This screen is to set the settings for your goal.
+--> It has a modle that when selected lets you choose what 'species' of tree to plant.
+--> The species chooser displays identifies what species are unlocked and locked.
+--> A rounded slider is used to set the length of the goal.
+--> The plant button starts the timer.
+--> (There is a group activity button but I do not care about this.)
+--> There is a display for the amount of points you have earned and additional modles for purchesing more.
+--> A hamburga icon is available for the user to navigate between the screens.
+> 'Forest' Screen
+--> This screen is to show what/when activities have been recorded.
+--> The main object is the visual forset, which displays the activities for the selected timeframe as individual trees.
+--> There is a row of buttons to adjust the timeframe.
+--> There are two counters for the amount of trees/dead trees for the selected timeframe.
+--> There is a graph showing the allocation of time thoughout the selected timeframe.
