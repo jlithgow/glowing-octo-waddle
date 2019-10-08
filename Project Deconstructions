@@ -44,3 +44,29 @@
 --> There is a row of buttons to adjust the timeframe.
 --> There are two counters for the amount of trees/dead trees for the selected timeframe.
 --> There is a graph showing the allocation of time thoughout the selected timeframe.
+
+(4) Minesweaper
+> Classic computer game
+> 'New Game' page
+--> Grid made up of tiles
+--> each tile is pressable or holdable
+----> In 'sweep' mode:
+------> onTilePr3ss => show tile value (either 'bomb' || 'sum of neighboring bombs')
+------> onTileH0ld => mark tile as flagged (non-behaviorial, just the for the player)
+----> In 'flag' mode:
+------> onTilePr3ss => toggle tile between flagged (non-behaviorial, just the for the player)
+--> toggle Click mode button
+----> Toggles the click mode ('sweep' || 'flag')
+--> New Game button
+----> If currentGame = active:
+------> Alert with confirmation to create new game
+----> else if Failed:
+------> restart game
+--> Timer
+----> Non-interactive
+--> Settings
+----> Pauses timer
+----> if game.settings == changed?:
+------> start new game
+----> else if NoChanges:
+------> resume timer
