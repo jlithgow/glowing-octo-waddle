@@ -1,0 +1,170 @@
+//Created from https://editor.p5js.org/jlithgow/sketches/ZEYBLA6as
+//41524c|031119
+
+new p5();
+
+class Ball {
+  constructor(point, velocity={x:random(-5, 5), y:random(-5,5)}) {
+    this.x = point.x;
+    this.y = point.y;
+    this.point = point;
+    this.vX = velocity.x;
+    this.vY = velocity.y;
+  }
+  
+  draw() {
+    fill(255, 0, 0);
+    stroke(1);
+    ellipse(this.x, this.y, 10);
+  }
+  
+  move() {
+    this.checkCollisions();
+    this.x += this.vX;
+    this.y += this.vY;
+  }
+  
+  checkCollisions() {
+    this.check_walls();
+    // this.check_paddles();
+    //check_goals();
+  }
+  check_walls() {
+    if (this.x < 0 || this.x > width) {
+      this.vX *= -1;
+      score = 0;
+    }
+    if (this.y > height || this.y < 0) {
+      this.vY *= -1;
+    }
+  }
+  check_paddles() {
+    if (turn == 'left' && onSide('left') == true) {
+      if (dist(this.x, this.y, leftEye.position.x, leftEye.position.y) <= 50) {
+        this.vX *= -1;
+        turn = 'right';
+        score++;
+      }
+    } else if (turn == 'right' && onSide('right') == true) {
+      if (dist(this.x, this.y, rightEye.position.x, rightEye.position.y) <= 50) {
+        this.vX *= -1;
+        turn = 'left';
+        score++;
+      }
+    }
+  }
+  
+}
+
+
+let video;
+let status;
+let poseNet;
+let score = 0;
+let turn = 'left';
+let detected = false;
+let objects = [];
+let leftEye;
+let rightEye;
+
+let center = {
+  x: 150,
+  y: 150,
+};
+let ball = new Ball(center);
+
+
+function setup() {
+  createCanvas(320, 240);
+  video = createCapture(VIDEO);
+  video.size(320, 240);
+  poseNet = ml5.poseNet(video, startDetecting);
+
+  // Hide the original video
+  video.hide();
+  status = select('#status');
+}
+
+
+function draw() {
+  image(video, 0, 0, width, height);
+  drawBoundries();
+  
+  text('Score: '+score, width/2, height/7);
+  if(turn == 'left') {
+    drawSide('left');
+  } else if (turn == 'right') {
+    drawSide('right');
+  }
+  
+  ball.move();
+  ball.draw();
+  
+  for (let i=0; i<objects.length; i++) {
+    
+    leftEye = objects[0].pose.keypoints[1];
+    rightEye = objects[0].pose.keypoints[2];
+    drawEyes();
+    
+    ball.check_paddles();
+    
+  } 
+}
+
+
+function startDetecting() {
+  status.html('Model loaded!');
+  detect();
+}
+
+
+function detect() {
+  poseNet.on("pose", function(results) {
+    objects = results;
+    detected = true;
+    
+    console.log(objects);
+  });
+}
+
+function drawEyes() {
+  fill(255, 255, 255);
+  if (turn == 'left' && onSide('left') == true) {
+    ellipse(leftEye.position.x, leftEye.position.y, 10);
+  }
+  if (turn == 'right' && onSide('right') == true) {
+    ellipse(rightEye.position.x, rightEye.position.y, 10);
+  }
+}
+
+function onSide(sideToCheck) {
+  if (sideToCheck == 'right') {
+    if (rightEye.position.x >= width/2) {
+      return true; //On right side
+    } else {
+      return false; //On left side
+    }
+  } else if (sideToCheck == 'left') {
+    if (leftEye.position.x <= width/2) {
+      return true; //On left side
+    } else {
+      return false; //On right side
+    }
+  }
+}
+
+function drawSide(sideToDraw) {
+  if (turn == 'right') {
+    fill(255, 0, 0, 30);
+    rect(width/2, 0, width/2, height);
+  } else if (turn == 'left') {
+    fill(0, 255, 0, 30);
+    rect(0, 0, width/2, height);
+  }
+}
+
+function drawBoundries() {
+  fill(255, 0, 0);
+  rect(0, 0, 4, height);
+  rect(width-4, 0, 4, height);
+}
